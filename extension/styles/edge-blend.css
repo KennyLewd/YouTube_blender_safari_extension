@@ -1,0 +1,78 @@
+/* Remove encoded/object-fit bars while keeping the actual picture opaque. */
+[data-safari-edge-video],
+[data-safari-edge-host] > .ambientlight__video-overlay,
+[data-safari-edge-host] > .ambientlight__video-debanding {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent var(--safari-edge-left), black calc(var(--safari-edge-left) + var(--safari-edge-fade)), black calc(var(--safari-edge-right) - var(--safari-edge-fade)), transparent var(--safari-edge-right)),
+    linear-gradient(to bottom, transparent var(--safari-edge-top), black calc(var(--safari-edge-top) + var(--safari-edge-fade)), black calc(var(--safari-edge-bottom) - var(--safari-edge-fade)), transparent var(--safari-edge-bottom));
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent var(--safari-edge-left), black calc(var(--safari-edge-left) + var(--safari-edge-fade)), black calc(var(--safari-edge-right) - var(--safari-edge-fade)), transparent var(--safari-edge-right)),
+    linear-gradient(to bottom, transparent var(--safari-edge-top), black calc(var(--safari-edge-top) + var(--safari-edge-fade)), black calc(var(--safari-edge-bottom) - var(--safari-edge-fade)), transparent var(--safari-edge-bottom));
+  mask-composite: intersect;
+}
+
+.safari-edge-blend {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  /* The near edge remains opaque; the extension fades into the wide glow
+     only outside the picture. Never fade both picture and rim together. */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, black calc(var(--safari-edge-reach-x) * .8), black calc(100% - var(--safari-edge-reach-x) * .8), transparent),
+    linear-gradient(to bottom, transparent, black calc(var(--safari-edge-reach-y) * .8), black calc(100% - var(--safari-edge-reach-y) * .8), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, black calc(var(--safari-edge-reach-x) * .8), black calc(100% - var(--safari-edge-reach-x) * .8), transparent),
+    linear-gradient(to bottom, transparent, black calc(var(--safari-edge-reach-y) * .8), black calc(100% - var(--safari-edge-reach-y) * .8), transparent);
+  mask-composite: intersect;
+}
+.safari-edge-blend__rim {
+  position: absolute;
+  inset: 0;
+  /* Solid bar fills and outer extension, with a short crossfade over the
+     fully opaque picture. The center does not participate in the blur. */
+  -webkit-mask-image:
+    linear-gradient(to right, black var(--safari-edge-left), transparent calc(var(--safari-edge-left) + var(--safari-edge-width)), transparent calc(var(--safari-edge-right) - var(--safari-edge-width)), black var(--safari-edge-right)),
+    linear-gradient(to bottom, black var(--safari-edge-top), transparent calc(var(--safari-edge-top) + var(--safari-edge-width)), transparent calc(var(--safari-edge-bottom) - var(--safari-edge-width)), black var(--safari-edge-bottom));
+  -webkit-mask-composite: source-over;
+  mask-image:
+    linear-gradient(to right, black var(--safari-edge-left), transparent calc(var(--safari-edge-left) + var(--safari-edge-width)), transparent calc(var(--safari-edge-right) - var(--safari-edge-width)), black var(--safari-edge-right)),
+    linear-gradient(to bottom, black var(--safari-edge-top), transparent calc(var(--safari-edge-top) + var(--safari-edge-width)), transparent calc(var(--safari-edge-bottom) - var(--safari-edge-width)), black var(--safari-edge-bottom));
+  mask-composite: add;
+}
+.safari-edge-blend canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* Blur is baked into a small, padded raster; no large CSS blur surface. */
+  filter: none;
+}
+
+/* A separate player shadow fights the seamless edge treatment. Restore the
+   user's ordinary shadow when edge blending is switched off. */
+html[data-safari-edge-active] .ambientlight__video-shadow { display: none !important; }
+
+/* Permit the narrow external blend to meet the ambient canvas. Cropped and
+   fullscreen players retain their ordinary clipping and never get this mark. */
+html[data-safari-edge-active] [data-safari-edge-player] { overflow: visible !important; }
+
+/* Outer blend behind the page content (inside the glow layer). Opaque at the
+   video edge, easing out to transparent so it melts into the glow. */
+.safari-edge-under {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  contain: strict;
+  --r: var(--safari-under-reach, 160px);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, rgba(0,0,0,.1) calc(var(--r) * .3), rgba(0,0,0,.4) calc(var(--r) * .55), rgba(0,0,0,.8) calc(var(--r) * .8), black var(--r), black calc(100% - var(--r)), rgba(0,0,0,.8) calc(100% - var(--r) * .8), rgba(0,0,0,.4) calc(100% - var(--r) * .55), rgba(0,0,0,.1) calc(100% - var(--r) * .3), transparent),
+    linear-gradient(to bottom, transparent, rgba(0,0,0,.1) calc(var(--r) * .3), rgba(0,0,0,.4) calc(var(--r) * .55), rgba(0,0,0,.8) calc(var(--r) * .8), black var(--r), black calc(100% - var(--r)), rgba(0,0,0,.8) calc(100% - var(--r) * .8), rgba(0,0,0,.4) calc(100% - var(--r) * .55), rgba(0,0,0,.1) calc(100% - var(--r) * .3), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, rgba(0,0,0,.1) calc(var(--r) * .3), rgba(0,0,0,.4) calc(var(--r) * .55), rgba(0,0,0,.8) calc(var(--r) * .8), black var(--r), black calc(100% - var(--r)), rgba(0,0,0,.8) calc(100% - var(--r) * .8), rgba(0,0,0,.4) calc(100% - var(--r) * .55), rgba(0,0,0,.1) calc(100% - var(--r) * .3), transparent),
+    linear-gradient(to bottom, transparent, rgba(0,0,0,.1) calc(var(--r) * .3), rgba(0,0,0,.4) calc(var(--r) * .55), rgba(0,0,0,.8) calc(var(--r) * .8), black var(--r), black calc(100% - var(--r)), rgba(0,0,0,.8) calc(100% - var(--r) * .8), rgba(0,0,0,.4) calc(100% - var(--r) * .55), rgba(0,0,0,.1) calc(100% - var(--r) * .3), transparent);
+  mask-composite: intersect;
+}
+.safari-edge-under canvas { display: block; width: 100%; height: 100%; }

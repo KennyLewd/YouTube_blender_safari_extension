@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ambient Light</title>
+  <link rel="stylesheet" href="styles/popup.css">
+</head>
+<body>
+  <header><img src="images/icon-128.png" alt=""><div><h1>Ambient Light</h1><p>Let the video set the mood.</p></div></header>
+  <label class="switch"><span>Ambient light</span><input id="enabled" type="checkbox" role="switch" disabled></label>
+  <p id="status" role="status">Connecting to this YouTube page…</p>
+  <section id="edge-blending">
+    <label for="edgeBlend">Edge blending <output id="edgeBlend-value"></output></label>
+    <input id="edgeBlend" type="range" min="0" max="60" step="2" disabled>
+    <p class="note">Extends picture colors across black bars and blends a narrow border into the glow. The center stays crisp. Set to 0 to turn off.</p>
+    <label for="edgeReach">Blend distance <output id="edgeReach-value"></output></label>
+    <input id="edgeReach" type="range" min="0" max="320" step="10" disabled>
+    <p class="note">In the regular (non-theater) view, spreads the picture's colors this far past the player and fades them into the glow, so the player edge disappears like in theater mode. Set to 0 to turn off.</p>
+  </section>
+  <section id="desktop">
+    <label class="switch"><span>Transparent search header</span><input id="headerGlass" type="checkbox" role="switch" disabled></label>
+    <p class="note">Removes the header background and extra blur, including while scrolling.</p>
+    <h2>Desktop glow</h2>
+    <fieldset id="desktop-controls" disabled>
+      <label for="desktop-brightness">Brightness <output id="desktop-brightness-value"></output></label>
+      <input id="desktop-brightness" type="range">
+      <label for="desktop-spread">Spread <output id="desktop-spread-value"></output></label>
+      <input id="desktop-spread" type="range">
+      <label for="desktop-verticalSpread">Vertical reach <output id="desktop-verticalSpread-value"></output></label>
+      <input id="desktop-verticalSpread" type="range">
+      <label for="desktop-blur2">Softness <output id="desktop-blur2-value"></output></label>
+      <input id="desktop-blur2" type="range">
+      <h2>Motion</h2>
+      <label class="switch" id="desktop-frameBlending-row"><span>Smooth motion</span><input id="desktop-frameBlending" type="checkbox" role="switch"></label>
+      <div id="desktop-frameBlendingSmoothness-row" hidden>
+        <label for="desktop-frameBlendingSmoothness">Smooth motion strength <output id="desktop-frameBlendingSmoothness-value"></output></label>
+        <input id="desktop-frameBlendingSmoothness" type="range">
+      </div>
+      <label for="desktop-framerateLimit">Glow frame rate <output id="desktop-framerateLimit-value"></output></label>
+      <input id="desktop-framerateLimit" type="range">
+      <label class="switch"><span>Sync video with glow</span><input id="desktop-videoOverlayEnabled" type="checkbox" role="switch"></label>
+      <label class="switch"><span>Save energy on still videos</span><input id="desktop-energySaver" type="checkbox" role="switch"></label>
+      <p class="note">Smooth motion blends frames for a softer glow, so it trails the video slightly and runs at the full frame rate. Choosing a frame rate turns it off. Sync video makes the video wait for the glow so they never drift apart, but heavy scenes may drop a frame. The frame rate also applies to edge blending.</p>
+      <button id="desktop-balanced">Balanced glow</button>
+      <button id="desktop-motion">Match video motion</button>
+    </fieldset>
+    <p id="desktop-status" class="note" role="status">Connecting to the player…</p>
+    <p class="note">Balanced glow softens the surround and lowers its brightness. Match video motion turns off smooth motion and fading, and sets 60 fps. More controls are inside the player’s ambient-light menu.</p>
+    <p class="note">After switching ambient light on or off above, refresh the desktop page.</p>
+  </section>
+  <footer><span id="version"></span><br>Based on <a href="https://github.com/WesselKroos/youtube-ambilight" target="_blank" rel="noopener noreferrer">Wessel Kroos’s Ambient light for YouTube</a>.<br>Independent Safari adaptation · No remote diagnostics.</footer>
+  <script src="scripts/popup.js"></script>
+</body>
+</html>

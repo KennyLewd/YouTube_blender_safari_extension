@@ -1,0 +1,35 @@
+:root { color-scheme: dark; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #15171d; color: #f4f5fa; }
+* { box-sizing: border-box; }
+/* Safari measures the document to size its popover. A viewport-based maximum
+   here feeds the initial tiny popover width back into that measurement. */
+html { width: 340px; min-width: 340px; margin: 0; overflow: hidden; }
+body { width: 340px; min-width: 340px; max-height: 540px; overflow-x: hidden; overflow-y: auto; margin: 0; padding: 20px; font-size: 13px; line-height: 1.5; }
+@media (max-device-width: 350px) {
+  html, body { width: 300px; min-width: 300px; }
+  body { padding: 16px; }
+}
+header { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; }
+header img { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0; }
+h1 { font-size: 21px; margin: 0; letter-spacing: -.5px; }
+header p { margin: 1px 0 0; color: #aab0c3; }
+h2 { font-size: 14px; margin: 20px 0 10px; }
+.switch { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; padding: 12px; border-radius: 12px; background: #252936; }
+input[type=checkbox] { accent-color: #a393ff; width: 20px; height: 20px; }
+#status { color: #b9b6e9; }
+label:not(.switch) { display: flex; justify-content: space-between; margin-top: 14px; }
+output { color: #b9b6e9; font-variant-numeric: tabular-nums; }
+input[type=range] { width: 100%; accent-color: #a393ff; min-height: 30px; margin: 0; }
+button { background: #30364a; color: inherit; border: 1px solid #49516a; border-radius: 8px; padding: 8px 12px; margin-top: 12px; cursor: pointer; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid #c4bcff; outline-offset: 3px; }
+.note, footer { color: #aab0c3; font-size: 11px; }
+.player-guide { width: 100%; border-radius: 8px; }
+footer { border-top: 1px solid #303544; padding-top: 14px; margin-top: 18px; }
+a { color: #c4bcff; }
+
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+#desktop > .switch { margin-top: 18px; font-size: 13px; }
+button:disabled, fieldset:disabled { opacity: .5; }
+
+#generated-experiment input[type=text], #generated-experiment input[type=password] { width:100%; padding:7px; border:1px solid #49516a; border-radius:6px; color:inherit; background:#252936; }
+#desktop-controls .switch { margin-top: 14px; font-size: 13px; }
+#desktop-controls h2 { margin-top: 22px; }

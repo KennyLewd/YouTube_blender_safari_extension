@@ -1,0 +1,21 @@
+/* Transparent header: no backdrop blur, tint, or animated filtering.
+   Keep the existing preference key so upgrades respect the user's switch. */
+html.safari-ambient-glass-header #masthead-container #background.ytd-masthead,
+html.safari-ambient-glass-header #masthead-container ytd-masthead#masthead {
+  background: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* YouTube may keep its divider/shadow even after the background is removed. */
+html.safari-ambient-glass-header #masthead-container,
+html.safari-ambient-glass-header #masthead-container ytd-masthead#masthead,
+html.safari-ambient-glass-header #masthead-container #background.ytd-masthead {
+  box-shadow: none !important;
+  border-bottom: 0 !important;
+  filter: none !important;
+}
+html.safari-ambient-glass-header #masthead-container::after,
+html.safari-ambient-glass-header #masthead-container ytd-masthead#masthead::after {
+  display: none !important;
+}
